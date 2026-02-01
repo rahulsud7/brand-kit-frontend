@@ -1,4 +1,5 @@
-export const API_BASE = "http://localhost:5000";
+export const API_BASE = "https://brand-kit-backend.onrender.com";
+
 
 /*
 If backend is running in WSL and localhost fails,
