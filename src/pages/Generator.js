@@ -20,21 +20,25 @@ export default function Generator() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Get logged in user
   useEffect(() => {
-    const getUser = async () => {
+    const loadUser = async () => {
       const { data } = await supabase.auth.getUser();
       if (data?.user) setUserId(data.user.id);
     };
-    getUser();
+    loadUser();
   }, []);
 
   const update = (field, value) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
   const generate = async () => {
-    try {
-      if (!userId) return alert("Login required");
+    if (!userId) {
+      alert("Please login first.");
+      return;
+    }
 
+    try {
       setLoading(true);
 
       const res = await axios.post(
@@ -45,11 +49,11 @@ export default function Generator() {
         }
       );
 
-      setResult(res.data);
+      setResult(res.data); // THIS is what renders UI
 
     } catch (err) {
-      console.error(err.response?.data || err);
-      alert("Generation failed");
+      console.error("Generation failed:", err.response?.data || err);
+      alert("Generation failed. Check console.");
     } finally {
       setLoading(false);
     }
@@ -60,29 +64,53 @@ export default function Generator() {
 
       <div className="form-card">
 
-        <input placeholder="Brand Name"
-          onChange={e => update("brandName", e.target.value)} />
+        <input
+          placeholder="Brand Name"
+          value={form.brandName}
+          onChange={e => update("brandName", e.target.value)}
+        />
 
-        <input placeholder="Industry"
-          onChange={e => update("industry", e.target.value)} />
+        <input
+          placeholder="Industry"
+          value={form.industry}
+          onChange={e => update("industry", e.target.value)}
+        />
 
-        <input placeholder="Audience"
-          onChange={e => update("audience", e.target.value)} />
+        <input
+          placeholder="Target Audience"
+          value={form.audience}
+          onChange={e => update("audience", e.target.value)}
+        />
 
-        <input placeholder="Personality"
-          onChange={e => update("personality", e.target.value)} />
+        <input
+          placeholder="Personality"
+          value={form.personality}
+          onChange={e => update("personality", e.target.value)}
+        />
 
-        <input placeholder="Core Values"
-          onChange={e => update("values", e.target.value)} />
+        <input
+          placeholder="Core Values"
+          value={form.values}
+          onChange={e => update("values", e.target.value)}
+        />
 
-        <input placeholder="Competitors"
-          onChange={e => update("competitors", e.target.value)} />
+        <input
+          placeholder="Competitors"
+          value={form.competitors}
+          onChange={e => update("competitors", e.target.value)}
+        />
 
-        <input placeholder="Logo Style"
-          onChange={e => update("stylePreference", e.target.value)} />
+        <input
+          placeholder="Logo Style"
+          value={form.stylePreference}
+          onChange={e => update("stylePreference", e.target.value)}
+        />
 
-        <textarea placeholder="Visual Direction"
-          onChange={e => update("logoDirection", e.target.value)} />
+        <textarea
+          placeholder="Visual Direction"
+          value={form.logoDirection}
+          onChange={e => update("logoDirection", e.target.value)}
+        />
 
         <button onClick={generate}>
           {loading ? "Generating..." : "Generate Brand Kit"}

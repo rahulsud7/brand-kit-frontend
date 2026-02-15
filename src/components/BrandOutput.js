@@ -2,48 +2,67 @@ export default function BrandOutput({ kit }) {
   if (!kit) return null;
 
   return (
-    <div className="brand-output">
+    <div style={{
+      marginTop: "40px",
+      padding: "30px",
+      background: "#0f172a",
+      borderRadius: "16px",
+      color: "white"
+    }}>
 
-      {/* LOGO */}
-      <div
-        dangerouslySetInnerHTML={{ __html: kit.logo_svg }}
-        className="logo-preview"
-      />
+      {/* Logo */}
+      <div style={{ marginBottom: "20px" }}>
+        <div
+          dangerouslySetInnerHTML={{ __html: kit.logo_svg }}
+        />
+        <p style={{ opacity: 0.7, fontSize: "14px" }}>
+          {kit.logo_description}
+        </p>
+      </div>
 
-      {/* TAGLINE */}
+      {/* Tagline */}
       <h2>{kit.taglines?.[0]}</h2>
 
-      {/* COLORS */}
-      <div className="color-grid">
-        {kit.colors?.map((c, i) => (
-          <div key={i} className="color-box">
+      {/* Colors */}
+      <div style={{
+        display: "flex",
+        gap: "12px",
+        marginTop: "20px"
+      }}>
+        {kit.colors?.map((color, i) => (
+          <div key={i} style={{ textAlign: "center" }}>
             <div style={{
-              background: c.hex,
+              width: "60px",
               height: "60px",
-              borderRadius: "8px"
+              borderRadius: "10px",
+              background: color.hex
             }} />
-            <small>{c.role} - {c.hex}</small>
+            <small>{color.hex}</small>
           </div>
         ))}
       </div>
 
-      {/* FONTS */}
-      <div className="font-preview">
+      {/* Typography */}
+      <div style={{ marginTop: "30px" }}>
         <h3 style={{ fontFamily: kit.fonts?.heading }}>
-          {kit.fonts?.heading}
+          Heading Font: {kit.fonts?.heading}
         </h3>
         <p style={{ fontFamily: kit.fonts?.body }}>
-          {kit.fonts?.body}
+          Body Font: {kit.fonts?.body}
         </p>
       </div>
 
-      {/* BIO */}
-      <p>{kit.instagram_bio}</p>
+      {/* Instagram Bio */}
+      <div style={{ marginTop: "30px" }}>
+        <h4>Instagram Bio</h4>
+        <p>{kit.instagram_bio}</p>
+      </div>
 
-      {/* CAPTIONS */}
-      <div>
-        {kit.captions?.map((c, i) => (
-          <div key={i}>{c}</div>
+      {/* Captions */}
+      <div style={{ marginTop: "20px" }}>
+        <h4>Captions</h4>
+        {kit.captions?.map((caption, i) => (
+          <p key={i}>• {caption}</p>
         ))}
       </div>
 
