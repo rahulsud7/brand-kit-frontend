@@ -32,32 +32,32 @@ export default function Generator() {
   const update = (field, value) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
-  const generate = async () => {
-    try {
-      if (!userId) {
-        alert("User not authenticated.");
-        return;
-      }
-
-      setLoading(true);
-
-      const res = await axios.post(
-        `${API_BASE}/generate-brand-kit`,
-        {
-          ...form,
-          userId
-        }
-      );
-
-      console.log("Generated:", res.data);
-
-    } catch (err) {
-      console.error("Generation error:", err.response?.data || err);
-      alert("Generation failed.");
-    } finally {
-      setLoading(false);
+ const generate = async () => {
+  try {
+    if (!userId) {
+      alert("User not authenticated.");
+      return;
     }
-  };
+
+    setLoading(true);
+
+    const res = await axios.post(
+      `${API_BASE}/generate-brand-kit`,
+      {
+        ...form,
+        userId
+      }
+    );
+
+    setResult(res.data); // IMPORTANT CHANGE
+
+  } catch (err) {
+    console.error("Generation error:", err.response?.data || err);
+    alert("Generation failed.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="page">
