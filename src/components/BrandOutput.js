@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { loadGoogleFont } from "../utils/loadGoogleFont";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function BrandOutput({ kit }) {
   const [selectedTagline, setSelectedTagline] = useState(
     kit?.taglines?.[0] || ""
   );
+
+  const exportRef = useRef(null);
 
   useEffect(() => {
     if (kit?.fonts) {
@@ -14,91 +18,73 @@ export default function BrandOutput({ kit }) {
 
   if (!kit) return null;
 
+  const exportPDF = async () => {
+    const element = exportRef.current;
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      backgroundColor: "#020617"
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const imgWidth = 210;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    pdf.save("brand-kit.pdf");
+  };
+
   return (
-    <div className="brand-board fade-in">
+    <>
+      <button className="export-btn" onClick={exportPDF}>
+        Export as PDF
+      </button>
 
-      {/* ===== HERO SECTION ===== */}
-      <section className="brand-hero">
-        <div
-          className="brand-logo"
-          dangerouslySetInnerHTML={{ __html: kit.logo_svg }}
-        />
+      <div ref={exportRef} className="brand-board">
 
-        <h2
-          className="brand-tagline"
-          style={{ fontFamily: `'${kit.fonts?.[0]}', sans-serif` }}
-        >
-          {selectedTagline}
-        </h2>
-      </section>
+        <section className="brand-hero">
+          <div
+            className="brand-logo"
+            dangerouslySetInnerHTML={{ __html: kit.logo_svg }}
+          />
+          <h2
+            style={{ fontFamily: `'${kit.fonts?.[0]}', sans-serif` }}
+          >
+            {selectedTagline}
+          </h2>
+        </section>
 
-      {/* ===== TAGLINE OPTIONS ===== */}
-      <section className="brand-section">
-        <h3>Alternate Taglines</h3>
-        <div className="tagline-options">
-          {kit.taglines?.map((t, i) => (
-            <div
-              key={i}
-              className={`tagline-card ${
-                selectedTagline === t ? "active" : ""
-              }`}
-              onClick={() => setSelectedTagline(t)}
-              style={{ fontFamily: `'${kit.fonts?.[0]}', sans-serif` }}
-            >
-              {t}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== COLORS ===== */}
-      <section className="brand-section">
-        <h3>Color Palette</h3>
-        <div className="color-showcase">
-          {kit.colors?.map((c, i) => (
-            <div key={i} className="color-block">
-              <div
-                className="color-box"
-                style={{ background: c.hex }}
-              />
-              <span>{c.name}</span>
-              <small>{c.hex}</small>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===== TYPOGRAPHY ===== */}
-      <section className="brand-section">
-        <h3>Typography</h3>
-        {kit.fonts?.map((font, i) => (
-          <div key={i} className="font-preview-card">
-            <strong>{font}</strong>
-            <p style={{ fontFamily: `'${font}', sans-serif` }}>
-              The quick brown fox jumps over the lazy dog
-            </p>
+        <section className="brand-section">
+          <h3>Color Palette</h3>
+          <div className="color-showcase">
+            {kit.colors?.map((c, i) => (
+              <div key={i} className="color-block">
+                <div
+                  className="color-box"
+                  style={{ background: c.hex }}
+                />
+                <span>{c.name}</span>
+                <small>{c.hex}</small>
+              </div>
+            ))}
           </div>
-        ))}
-      </section>
+        </section>
 
-      {/* ===== SOCIAL CONTENT ===== */}
-      <section className="brand-section">
-        <h3>Instagram Bio</h3>
-        <div className="bio-card">
-          {kit.instagram_bio}
-        </div>
-      </section>
-
-      <section className="brand-section">
-        <h3>Sample Captions</h3>
-        <div className="captions-grid">
-          {kit.captions?.map((c, i) => (
-            <div key={i} className="caption-chip">
-              {c}
+        <section className="brand-section">
+          <h3>Typography</h3>
+          {kit.fonts?.map((font, i) => (
+            <div key={i} className="font-preview-card">
+              <strong>{font}</strong>
+              <p style={{ fontFamily: `'${font}', sans-serif` }}>
+                The quick brown fox jumps over the lazy dog
+              </p>
             </div>
           ))}
-        </div>
-      </section>
-    </div>
+        </section>
+
+      </div>
+    </>
   );
 }
