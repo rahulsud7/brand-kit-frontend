@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_BASE } from "../config";
+import { supabase } from "../supabaseClient";
 
-export default function Generator({ user }) {
+export default function Generator() {
   const [form, setForm] = useState({
     brandName: "",
     industry: "",
@@ -14,20 +15,37 @@ export default function Generator({ user }) {
     logoDirection: ""
   });
 
+  const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data?.user) {
+        setUserId(data.user.id);
+      }
+    };
+
+    getUser();
+  }, []);
 
   const update = (field, value) =>
     setForm(prev => ({ ...prev, [field]: value }));
 
   const generate = async () => {
     try {
+      if (!userId) {
+        alert("User not authenticated.");
+        return;
+      }
+
       setLoading(true);
 
       const res = await axios.post(
         `${API_BASE}/generate-brand-kit`,
         {
           ...form,
-          userId: user?.id
+          userId
         }
       );
 
