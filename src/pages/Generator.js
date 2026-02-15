@@ -23,7 +23,7 @@ export default function Generator() {
 
   const generate = async () => {
     setLoading(true);
-    const res = await axios.post(`${API_BASE}/generate`, form);
+    const res = await axios.post(`${API_BASE}/generate-brand-kit`, form);
     setResult(res.data);
     setLoading(false);
   };
