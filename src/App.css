@@ -640,3 +640,60 @@ header {
   cursor: pointer;
   margin-bottom: 20px;
 }
+.action-bar {
+  margin-bottom: 20px;
+}
+
+.regen-btn {
+  margin-top: 10px;
+  background: #1f2937;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header button {
+  background: #1f2937;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.tagline-card span,
+.caption-chip span,
+.color-block small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.advanced-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #111827;
+  color: white;
+}
