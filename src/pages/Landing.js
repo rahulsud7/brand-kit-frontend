@@ -1,212 +1,191 @@
 import { Link } from "react-router-dom";
 
 export default function Landing() {
-
   return (
-
     <div
       style={{
         minHeight: "100vh",
         background:
           "radial-gradient(circle at 20% 20%, #1e293b, #020617)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "80px 20px",
         color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "60px 20px",
         fontFamily: "Inter, sans-serif"
       }}
     >
-
-      {/* HERO */}
-
       <div
         style={{
-          maxWidth: 900,
-          textAlign: "center"
+          maxWidth: 1100,
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 60,
+          alignItems: "center"
         }}
       >
+        {/* LEFT HERO CONTENT */}
 
-        <h1
-          style={{
-            fontSize: 56,
-            fontWeight: 700,
-            marginBottom: 20,
-            letterSpacing: "-1px",
-            background:
-              "linear-gradient(90deg,#38bdf8,#6366f1)",
-            WebkitBackgroundClip: "text",
-            color: "transparent"
-          }}
-        >
-          AI Brand Kit Generator
-        </h1>
-
-        <p
-          style={{
-            fontSize: 18,
-            opacity: 0.8,
-            marginBottom: 40
-          }}
-        >
-          Create complete brand identities in seconds using AI.
-          Logos, colors, fonts, and social media assets.
-        </p>
-
-        <Link to="/auth">
-
-          <button
+        <div>
+          <h1
             style={{
-              padding: "16px 36px",
-              fontSize: 18,
-              borderRadius: 14,
-              border: "none",
-              cursor: "pointer",
-              color: "white",
-              fontWeight: 600,
+              fontSize: 54,
+              fontWeight: 700,
+              marginBottom: 20,
+              lineHeight: 1.1,
               background:
-                "linear-gradient(90deg,#06b6d4,#3b82f6)",
-              boxShadow:
-                "0 20px 40px rgba(59,130,246,0.4)"
+                "linear-gradient(90deg,#38bdf8,#6366f1)",
+              WebkitBackgroundClip: "text",
+              color: "transparent"
             }}
           >
-            Generate My Brand →
-          </button>
-
-        </Link>
-
-      </div>
-
-      {/* FEATURE GLASS CARD */}
-
-      <div
-        style={{
-          marginTop: 80,
-          padding: 40,
-          width: "100%",
-          maxWidth: 900,
-          borderRadius: 22,
-          backdropFilter: "blur(18px)",
-          background: "rgba(15,23,42,0.65)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          boxShadow: "0 40px 80px rgba(0,0,0,0.6)"
-        }}
-      >
-
-        <h2 style={{ marginBottom: 20 }}>
-          Everything Your Brand Needs
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(160px,1fr))",
-            gap: 16
-          }}
-        >
-
-          {[
-            "⚡ AI Taglines",
-            "🎨 Color Palettes",
-            "✍️ Font Pairing",
-            "🧠 Brand Strategy",
-            "📱 Instagram Content",
-            "📦 Export Brand Kits"
-          ].map((f, i) => (
-
-            <div
-              key={i}
-              style={{
-                padding: 16,
-                borderRadius: 12,
-                background: "rgba(255,255,255,0.04)",
-                border:
-                  "1px solid rgba(255,255,255,0.06)",
-                textAlign: "center"
-              }}
-            >
-              {f}
-            </div>
-
-          ))}
-
-        </div>
-
-      </div>
-
-      {/* PHONE PREVIEW */}
-
-      <div
-        style={{
-          marginTop: 80,
-          display: "flex",
-          justifyContent: "center"
-        }}
-      >
-
-        <div
-          style={{
-            width: 260,
-            height: 520,
-            borderRadius: 32,
-            padding: 20,
-            background: "#000",
-            boxShadow:
-              "0 40px 80px rgba(0,0,0,0.8)",
-            textAlign: "center"
-          }}
-        >
-
-          <div
-            style={{
-              height: 120,
-              background:
-                "linear-gradient(90deg,#6366f1,#38bdf8)",
-              borderRadius: 14,
-              marginBottom: 20
-            }}
-          />
-
-          <h3>NeuroFuel</h3>
+            AI Brand Kit Generator
+          </h1>
 
           <p
             style={{
-              fontSize: 12,
-              opacity: 0.7,
-              marginBottom: 20
+              fontSize: 18,
+              opacity: 0.8,
+              marginBottom: 30
             }}
           >
-            AI productivity for creators
+            Generate logos, color palettes, fonts and
+            social content in seconds using AI.
           </p>
+
+          {/* FEATURES */}
 
           <div
             style={{
-              background: "#6366f1",
-              padding: 12,
-              borderRadius: 10,
-              fontSize: 13
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 12,
+              marginBottom: 40
             }}
           >
-            Work faster with AI 🚀
+            {[
+              "⚡ Taglines",
+              "🎨 Color Palettes",
+              "✍️ Typography",
+              "📱 Social Templates"
+            ].map((f, i) => (
+              <div
+                key={i}
+                style={{
+                  padding: "8px 14px",
+                  borderRadius: 20,
+                  background: "rgba(255,255,255,0.06)",
+                  border:
+                    "1px solid rgba(255,255,255,0.08)",
+                  fontSize: 14
+                }}
+              >
+                {f}
+              </div>
+            ))}
           </div>
 
+          {/* CTA */}
+
+          <Link to="/auth">
+            <button
+              style={{
+                padding: "16px 32px",
+                fontSize: 18,
+                borderRadius: 12,
+                border: "none",
+                cursor: "pointer",
+                fontWeight: 600,
+                color: "white",
+                background:
+                  "linear-gradient(90deg,#06b6d4,#3b82f6)",
+                boxShadow:
+                  "0 20px 40px rgba(59,130,246,0.35)"
+              }}
+            >
+              Generate My Brand →
+            </button>
+          </Link>
         </div>
 
+        {/* RIGHT PHONE PREVIEW */}
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            style={{
+              width: 280,
+              height: 540,
+              borderRadius: 32,
+              padding: 20,
+              background: "#000",
+              boxShadow:
+                "0 40px 80px rgba(0,0,0,0.8)",
+              position: "relative"
+            }}
+          >
+            <div
+              style={{
+                height: 140,
+                borderRadius: 14,
+                background:
+                  "linear-gradient(90deg,#6366f1,#38bdf8)",
+                marginBottom: 20
+              }}
+            />
+
+            <h3
+              style={{
+                textAlign: "center",
+                marginBottom: 6
+              }}
+            >
+              NeuroFuel
+            </h3>
+
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: 12,
+                opacity: 0.7,
+                marginBottom: 20
+              }}
+            >
+              AI productivity for creators
+            </p>
+
+            <div
+              style={{
+                background: "#6366f1",
+                padding: 12,
+                borderRadius: 12,
+                textAlign: "center",
+                fontSize: 14
+              }}
+            >
+              Work faster with AI 🚀
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* FOOTER */}
 
       <div
         style={{
-          marginTop: 80,
+          position: "absolute",
+          bottom: 20,
           opacity: 0.6,
           fontSize: 14
         }}
       >
         Built with AI • React • Node • Supabase
       </div>
-
     </div>
   );
 }
