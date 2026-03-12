@@ -1,3 +1,5 @@
+import InstagramTemplate from "./InstagramTemplate";
+
 export default function BrandOutput({ kit }) {
   if (!kit) return null;
 
@@ -65,7 +67,10 @@ export default function BrandOutput({ kit }) {
           <p key={i}>• {caption}</p>
         ))}
       </div>
-
+<InstagramTemplate
+  kit={kit}
+  brandName={kit?.brand_name || "brand"}
+/>
     </div>
   );
 }
