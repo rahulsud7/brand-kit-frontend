@@ -771,7 +771,7 @@ select {
   border: 1px solid rgba(255,255,255,0.08);
 
   background: #0f172a;
-  color: white;
+  color: rgb(118, 80, 80);
 
   font-size: 14px;
 }
