@@ -697,3 +697,51 @@ textarea {
   background: #111827;
   color: white;
 }
+.form-card {
+  max-width: 520px;
+  margin: auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.preset-buttons button {
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #eee;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+}
+
+.chip.active {
+  background: black;
+  color: white;
+}

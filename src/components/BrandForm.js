@@ -1,18 +1,47 @@
 import { useState } from "react";
 
 export default function BrandForm({ onGenerate, loading }) {
-  const [form, setForm] = useState({
+  const initialState = {
     brandName: "",
     brandType: "",
     industry: "",
     audience: "",
-    personality: "",
+    personality: [],
     keywords: "",
-    competitors: ""
-  });
+    competitors: "",
+    stylePreference: ""
+  };
+
+  const [form, setForm] = useState(initialState);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const togglePersonality = (trait) => {
+    if (form.personality.includes(trait)) {
+      setForm({
+        ...form,
+        personality: form.personality.filter((p) => p !== trait)
+      });
+    } else {
+      setForm({
+        ...form,
+        personality: [...form.personality, trait]
+      });
+    }
+  };
+
+  const handleSubmit = () => {
+    if (!form.brandName || !form.industry || !form.audience) {
+      alert("Please fill Brand Name, Industry and Audience.");
+      return;
+    }
+
+    onGenerate(form);
   };
 
   const personalityOptions = [
@@ -27,16 +56,80 @@ export default function BrandForm({ onGenerate, loading }) {
     "Energetic"
   ];
 
+  const presets = {
+    startup: {
+      brandName: "NeuroFuel",
+      brandType: "Startup",
+      industry: "Technology",
+      audience: "Young Professionals",
+      personality: ["Futuristic", "Energetic"],
+      keywords: "AI, productivity, performance",
+      competitors: "Notion, OpenAI",
+      stylePreference: "Minimal"
+    },
+
+    fashion: {
+      brandName: "Veloura",
+      brandType: "Product Brand",
+      industry: "Fashion",
+      audience: "High-income Consumers",
+      personality: ["Luxury", "Elegant"],
+      keywords: "premium, style, elegance",
+      competitors: "Gucci, Zara",
+      stylePreference: "Luxury"
+    },
+
+    cafe: {
+      brandName: "BeanOrbit",
+      brandType: "Startup",
+      industry: "Food & Beverage",
+      audience: "Students",
+      personality: ["Friendly", "Playful"],
+      keywords: "coffee, community, chill",
+      competitors: "Starbucks, Blue Tokai",
+      stylePreference: "Playful"
+    }
+  };
+
+  const loadPreset = (preset) => {
+    setForm(presets[preset]);
+  };
+
   return (
     <div className="form-card">
 
+      <h2>Create Your Brand</h2>
+
+      <div className="preset-buttons">
+        <p>Quick Start:</p>
+
+        <button onClick={() => loadPreset("startup")}>
+          AI Startup
+        </button>
+
+        <button onClick={() => loadPreset("fashion")}>
+          Luxury Fashion
+        </button>
+
+        <button onClick={() => loadPreset("cafe")}>
+          Coffee Brand
+        </button>
+      </div>
+
+      <h3>Brand Basics</h3>
+
       <input
         name="brandName"
-        placeholder="Brand Name"
+        placeholder="Brand Name (e.g. NeuroFuel)"
+        value={form.brandName}
         onChange={handleChange}
       />
 
-      <select name="brandType" onChange={handleChange}>
+      <select
+        name="brandType"
+        value={form.brandType}
+        onChange={handleChange}
+      >
         <option value="">Brand Type</option>
         <option>Startup</option>
         <option>Personal Brand</option>
@@ -45,7 +138,11 @@ export default function BrandForm({ onGenerate, loading }) {
         <option>Service Business</option>
       </select>
 
-      <select name="industry" onChange={handleChange}>
+      <select
+        name="industry"
+        value={form.industry}
+        onChange={handleChange}
+      >
         <option value="">Industry</option>
         <option>Technology</option>
         <option>Fashion</option>
@@ -58,7 +155,13 @@ export default function BrandForm({ onGenerate, loading }) {
         <option>Entertainment</option>
       </select>
 
-      <select name="audience" onChange={handleChange}>
+      <h3>Audience</h3>
+
+      <select
+        name="audience"
+        value={form.audience}
+        onChange={handleChange}
+      >
         <option value="">Target Audience</option>
         <option>Students</option>
         <option>Young Professionals</option>
@@ -68,14 +171,33 @@ export default function BrandForm({ onGenerate, loading }) {
         <option>General Public</option>
       </select>
 
+      <h3>Design Direction</h3>
+
+      <select
+        name="stylePreference"
+        value={form.stylePreference}
+        onChange={handleChange}
+      >
+        <option value="">Design Style</option>
+        <option>Minimal</option>
+        <option>Modern</option>
+        <option>Geometric</option>
+        <option>Luxury</option>
+        <option>Playful</option>
+        <option>Retro</option>
+      </select>
+
+      <h3>Brand Personality</h3>
+
       <div className="personality-box">
-        <p>Brand Personality</p>
         <div className="chips">
           {personalityOptions.map((p) => (
             <span
               key={p}
-              className={`chip ${form.personality === p ? "active" : ""}`}
-              onClick={() => setForm({ ...form, personality: p })}
+              className={`chip ${
+                form.personality.includes(p) ? "active" : ""
+              }`}
+              onClick={() => togglePersonality(p)}
             >
               {p}
             </span>
@@ -83,21 +205,29 @@ export default function BrandForm({ onGenerate, loading }) {
         </div>
       </div>
 
+      <h3>Extra Context</h3>
+
       <input
         name="keywords"
-        placeholder="Brand Keywords (optional)"
+        placeholder="Keywords (e.g. innovation, speed, community)"
+        value={form.keywords}
         onChange={handleChange}
       />
 
       <input
         name="competitors"
-        placeholder="Competitors (optional)"
+        placeholder="Competitors (e.g. Apple, Nike, Stripe)"
+        value={form.competitors}
         onChange={handleChange}
       />
 
-      <button onClick={() => onGenerate(form)}>
-        {loading ? "Generating..." : "Generate Brand Kit"}
+      <button
+        className="generate-btn"
+        onClick={handleSubmit}
+      >
+        {loading ? "Generating Brand Kit..." : "Generate Brand Kit"}
       </button>
+
     </div>
   );
 }
