@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_BASE } from "../config";
 import { supabase } from "../supabaseClient";
 import BrandOutput from "../components/BrandOutput";
+import PhonePreview from "../components/PhonePreview";
 
 export default function Generator() {
   const [form, setForm] = useState({
@@ -262,6 +263,24 @@ export default function Generator() {
         </button>
 
       </div>
+      <div style={{
+  display:"flex",
+  gap:40,
+  justifyContent:"center",
+  alignItems:"flex-start",
+  marginTop:40
+}}>
+
+  <div>
+    {/* your form here */}
+  </div>
+
+  <PhonePreview
+    kit={result}
+    brandName={form.brandName}
+  />
+
+</div>
 
       {/* RESULT */}
 
