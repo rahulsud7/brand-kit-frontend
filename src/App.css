@@ -701,7 +701,7 @@ textarea {
   max-width: 520px;
   margin: auto;
   padding: 30px;
-  background: white;
+  background: rgb(128, 83, 83);
   border-radius: 12px;
 }
 
@@ -796,7 +796,7 @@ select {
   font-size: 16px;
   font-weight: 600;
 
-  color: white;
+  color: rgb(107, 82, 82);
 
   background: linear-gradient(
     90deg,
